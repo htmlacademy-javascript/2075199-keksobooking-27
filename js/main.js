@@ -1,6 +1,6 @@
 // Целое случайное число в раданном диапазоне
 
-const getRangeFullNumber = (min, max) => {
+const getRangeIntegerNumber = (min, max) => {
   if (min < 0 || max < 0 || min === max) {
     return NaN;
   } if (min > max) {
@@ -14,7 +14,7 @@ const getRangeFullNumber = (min, max) => {
   return randomNumber;
 };
 
-getRangeFullNumber (1, 10);
+getRangeIntegerNumber (1, 10);
 
 // Случайное число с плавающей точкой в раданном диапазоне
 
