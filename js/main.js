@@ -61,7 +61,7 @@ const getRandomArrayElement = (array) =>
   array[getRangeIntegerNumber(0, array.length - 1)];
 
 const getAvatarNumber = () => {
-  const avatatNumber = getRangeIntegerNumber(MIN_AVATAR_COUNT ,MAX_AVATAR_COUNT).padStart(2, '0');
+  const avatatNumber = getRangeIntegerNumber(MIN_AVATAR_COUNT ,MAX_AVATAR_COUNT).toString().padStart(2, '0');
   return avatatNumber;
 };
 
