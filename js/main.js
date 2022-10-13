@@ -61,8 +61,8 @@ const getRandomArrayElement = (array) =>
   array[getRangeIntegerNumber(0, array.length - 1)];
 
 const getAvatarNumber = () => {
-  const avatatNumber = getRangeIntegerNumber(MIN_AVATAR_COUNT ,MAX_AVATAR_COUNT);
-  return '0' + avatatNumber;
+  const avatatNumber = getRangeIntegerNumber(MIN_AVATAR_COUNT ,MAX_AVATAR_COUNT).padStart(2, '0');
+  return avatatNumber;
 };
 
 const createAuthorData = () => ({
@@ -95,3 +95,5 @@ const createOffer = () => ({
 });
 
 const createOffres = Array.from({length: OFFERS_COUNT}, createOffer);
+
+createOffres();
