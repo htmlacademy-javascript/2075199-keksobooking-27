@@ -44,17 +44,17 @@ const priceMin = 10000;
 const priceMax = 100000;
 const OFFERS_COUNT = 10;
 
-const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
-const checkTime = ['12:00', '13:00', '14:00'];
+const CHECK_TIME = ['12:00', '13:00', '14:00'];
 
-const types = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 
-const photos = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
+const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 
-const titles = ['Гельвеция', 'Лахта Плаза', 'Лахта Плаза', 'Пушка Инн'];
+const TITILES = ['Гельвеция', 'Лахта Плаза', 'Лахта Плаза', 'Пушка Инн'];
 
-const descriptions = ['В числе удобств номеров письменный стол и общая ванная комната.', 'Каждое утро в отеле MFC Erfurter Seen сервируют континентальный завтрак и завтрак «шведский стол».', 'Номера курортного отеля оснащены кондиционером, сейфом и телевизором с плоским экраном и кабельными каналами.', 'Это любимая часть города Миртл-Бич среди наших гостей согласно независимым отзывам.'];
+const DESCRIPTIONS = ['В числе удобств номеров письменный стол и общая ванная комната.', 'Каждое утро в отеле MFC Erfurter Seen сервируют континентальный завтрак и завтрак «шведский стол».', 'Номера курортного отеля оснащены кондиционером, сейфом и телевизором с плоским экраном и кабельными каналами.', 'Это любимая часть города Миртл-Бич среди наших гостей согласно независимым отзывам.'];
 
 
 const getRandomArrayElement = (array) =>
@@ -68,17 +68,17 @@ const createAuthorData = () => ({
 });
 
 const createOfferData = () => ({
-  title: getRandomArrayElement(titles),
+  title: getRandomArrayElement(TITILES),
   address: `${getRangePointNumber(MIN_LAT, MAX_LAT, 5)}, ${getRangePointNumber(MIN_LNG, MAX_LNG, 5)}`,
   price: getRangeIntegerNumber(priceMin, priceMax),
-  type: getRandomArrayElement(types),
+  type: getRandomArrayElement(TYPES),
   rooms: getRangeIntegerNumber(1, 3),
   guests: getRangeIntegerNumber(1, 4),
-  checkin: getRandomArrayElement(checkTime),
-  checkout: getRandomArrayElement(checkTime),
-  features: features.slice(0, getRangeIntegerNumber(0, features.length)),
-  description: getRandomArrayElement(descriptions),
-  photos: Array.from({length: getRangeIntegerNumber(0, 10)}, () => getRandomArrayElement(photos))
+  checkin: getRandomArrayElement(CHECK_TIME),
+  checkout: getRandomArrayElement(CHECK_TIME),
+  features: FEATURES.slice(0, getRangeIntegerNumber(0, FEATURES.length)),
+  description: getRandomArrayElement(DESCRIPTIONS),
+  photos: Array.from({length: getRangeIntegerNumber(0, 10)}, () => getRandomArrayElement(PHOTOS))
 });
 
 const createLocationData = () => ({
