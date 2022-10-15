@@ -60,10 +60,8 @@ const descriptions = ['В числе удобств номеров письме�
 const getRandomArrayElement = (array) =>
   array[getRangeIntegerNumber(0, array.length - 1)];
 
-const getAvatarNumber = () => {
-  const avatatNumber = getRangeIntegerNumber(MIN_AVATAR_COUNT ,MAX_AVATAR_COUNT).toString().padStart(2, '0');
-  return avatatNumber;
-};
+const getAvatarNumber = () =>
+  getRangeIntegerNumber(MIN_AVATAR_COUNT ,MAX_AVATAR_COUNT).toString().padStart(2, '0');
 
 const createAuthorData = () => ({
   avatar: `img/avatars/user${getAvatarNumber()}.png`
@@ -78,9 +76,9 @@ const createOfferData = () => ({
   guests: getRangeIntegerNumber(1, 4),
   checkin: getRandomArrayElement(checkTime),
   checkout: getRandomArrayElement(checkTime),
-  features: getRandomArrayElement(features),
+  features: features.slice(0, getRangeIntegerNumber(0, features.length)),
   description: getRandomArrayElement(descriptions),
-  photos: getRandomArrayElement(photos),
+  photos: Array.from({length: getRangeIntegerNumber(0, 10)}, () => getRandomArrayElement(photos))
 });
 
 const createLocationData = () => ({
@@ -94,6 +92,7 @@ const createOffer = () => ({
   location: createLocationData(),
 });
 
-const createOffres = Array.from({length: OFFERS_COUNT}, createOffer);
+const createOffers = () =>
+  Array.from({length: OFFERS_COUNT}, createOffer);
 
-createOffres();
+createOffers();
