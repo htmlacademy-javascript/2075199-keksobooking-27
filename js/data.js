@@ -59,4 +59,3 @@ const createOffers = () =>
   Array.from({length: OFFERS_COUNT}, createOffer);
 
 export {createOffers};
-
