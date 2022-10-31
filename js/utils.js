@@ -34,4 +34,12 @@ const getRangePointNumber = (min, max, digitalAfterPoint = 1) => {
 const getRandomArrayElement = (array) =>
   array[getRangeIntegerNumber(0, array.length - 1)];
 
-export{getRangeIntegerNumber, getRangePointNumber, getRandomArrayElement};
+const typesHousing = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель'
+};
+
+export{getRangeIntegerNumber, getRangePointNumber, getRandomArrayElement, typesHousing};
