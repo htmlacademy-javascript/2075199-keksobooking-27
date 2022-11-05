@@ -34,6 +34,8 @@ const getRangePointNumber = (min, max, digitalAfterPoint = 1) => {
 const getRandomArrayElement = (array) =>
   array[getRangeIntegerNumber(0, array.length - 1)];
 
+//
+
 const typesHousing = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
@@ -42,4 +44,20 @@ const typesHousing = {
   hotel: 'Отель'
 };
 
-export{getRangeIntegerNumber, getRangePointNumber, getRandomArrayElement, typesHousing};
+// Валидация количесива гостей и количества комнат
+
+const roomsForGuests = {
+  1: ['1'],
+  2: ['2', '1'],
+  3: ['3', '2', '1'],
+  100: ['0']
+};
+
+const guestsForRooms = {
+  0: ['100'],
+  1: ['1', '2', '3'],
+  2: ['2', '3'],
+  3: ['3']
+};
+
+export {getRangeIntegerNumber, getRangePointNumber, getRandomArrayElement, typesHousing, roomsForGuests, guestsForRooms};
