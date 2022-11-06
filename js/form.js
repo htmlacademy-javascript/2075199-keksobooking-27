@@ -2,10 +2,12 @@ import {roomsForGuests, guestsForRooms, housingCoast} from './utils.js';
 
 const filters = document.querySelector('.map__filters');
 const addForm = document.querySelector('.ad-form');
-const roomsNumbers = document.querySelector('#room_number');
-const capacity = document.querySelector('#capacity');
+const roomsNumbers = addForm.querySelector('#room_number');
+const capacity = addForm.querySelector('#capacity');
 const typesHousing = addForm.querySelector('#type');
 const priceOfHouses = addForm.querySelector('#price');
+const timeIn = addForm.querySelector('#timein');
+const timeOut = addForm.querySelector('#timeout');
 
 const turnFiltersOff = () => {
   filters.classList.add('ad-form--disabled');
@@ -58,6 +60,7 @@ const validatorTypesHousing = () => {
   }
 };
 
+
 const getCapacityErrorMessage = () =>
   `Указанное количество комнат вмещает ${roomsForGuests[roomsNumbers.value].join(' или ')} гостей.`;
 
@@ -95,17 +98,25 @@ pristine.addValidator (
   getCoastErrorMessage
 );
 
+// pristine.addValidator ();
+
 capacity.addEventListener('change', onCapacityRoomsChange);
 roomsNumbers.addEventListener('change', onCapacityRoomsChange);
 typesHousing.addEventListener('change', () => {
   priceOfHouses.placeholder = housingCoast[typesHousing.value];
   onTypeHousingChange();
 });
+timeIn.addEventListener('change', () => {
+  timeOut.value = timeIn.value;
+});
+timeOut.addEventListener('change', () => {
+  timeIn.value = timeOut.value;
+});
 addForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
 
-  if (!isValid) {
+  if (isValid) {
     addForm.submit();
   }
 });
