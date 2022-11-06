@@ -44,6 +44,14 @@ const typesHousing = {
   hotel: 'Отель'
 };
 
+const housingCoast = {
+  flat: '1000',
+  bungalow: '0',
+  house: '5000',
+  palace: '10000',
+  hotel: '3000'
+};
+
 // Валидация количесива гостей и количества комнат
 
 const roomsForGuests = {
@@ -60,4 +68,4 @@ const guestsForRooms = {
   3: ['3']
 };
 
-export {getRangeIntegerNumber, getRangePointNumber, getRandomArrayElement, typesHousing, roomsForGuests, guestsForRooms};
+export {getRangeIntegerNumber, getRangePointNumber, getRandomArrayElement, typesHousing, roomsForGuests, guestsForRooms, housingCoast};

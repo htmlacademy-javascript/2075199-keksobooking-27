@@ -1,9 +1,11 @@
-import {roomsForGuests, guestsForRooms} from './utils.js';
+import {roomsForGuests, guestsForRooms, housingCoast} from './utils.js';
 
 const filters = document.querySelector('.map__filters');
 const addForm = document.querySelector('.ad-form');
 const roomsNumbers = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
+const typesHousing = addForm.querySelector('#type');
+const priceOfHouses = addForm.querySelector('#price');
 
 const turnFiltersOff = () => {
   filters.classList.add('ad-form--disabled');
@@ -48,6 +50,14 @@ const pristine = new Pristine(
 const validateCopacity = () =>
   roomsForGuests[roomsNumbers.value].includes(capacity.value);
 
+const validatorTypesHousing = () => {
+  if (housingCoast[typesHousing.value] <= +priceOfHouses.value) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 const getCapacityErrorMessage = () =>
   `Указанное количество комнат вмещает ${roomsForGuests[roomsNumbers.value].join(' или ')} гостей.`;
 
@@ -55,9 +65,16 @@ const getCapacityErrorMessage = () =>
 const getRoomsErrorMessage = () =>
   `Для указанного количества гостей требуется ${guestsForRooms[capacity.value].join(' или ')} комнат.`;
 
+const getCoastErrorMessage = () =>
+  `Для указанного типа жилья стоимость должна быть не меньше ${housingCoast[typesHousing.value]}`;
+
 const onCapacityRoomsChange = () => {
   pristine.validate(capacity);
   pristine.validate(roomsNumbers);
+};
+
+const onTypeHousingChange = () => {
+  pristine.validate(priceOfHouses);
 };
 
 pristine.addValidator (
@@ -72,8 +89,18 @@ pristine.addValidator (
   getRoomsErrorMessage
 );
 
+pristine.addValidator (
+  priceOfHouses,
+  validatorTypesHousing,
+  getCoastErrorMessage
+);
+
 capacity.addEventListener('change', onCapacityRoomsChange);
 roomsNumbers.addEventListener('change', onCapacityRoomsChange);
+typesHousing.addEventListener('change', () => {
+  priceOfHouses.placeholder = housingCoast[typesHousing.value];
+  onTypeHousingChange();
+});
 addForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
