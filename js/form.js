@@ -1,46 +1,40 @@
 import {roomsForGuests, guestsForRooms, housingCoast} from './utils.js';
 
-const filters = document.querySelector('.map__filters');
-const addForm = document.querySelector('.ad-form');
-const roomsNumbers = addForm.querySelector('#room_number');
-const capacity = addForm.querySelector('#capacity');
-const typesHousing = addForm.querySelector('#type');
-const priceOfHouses = addForm.querySelector('#price');
-const timeIn = addForm.querySelector('#timein');
-const timeOut = addForm.querySelector('#timeout');
+const addFormField = document.querySelector('.ad-form');
+const roomsNumbersElement = addFormField.querySelector('#room_number');
+const capacityElement = addFormField.querySelector('#capacity');
+const typesHousingElement = addFormField.querySelector('#type');
+const priceOfHousesElement = addFormField.querySelector('#price');
+const timeInElement = addFormField.querySelector('#timein');
+const timeOutElement = addFormField.querySelector('#timeout');
+const addressElement = addFormField.querySelector('#address');
+const sliderElement = addFormField.querySelector('#price-slider');
 
-const turnFiltersOff = () => {
-  filters.classList.add('ad-form--disabled');
-  for (const filterElement of filters.children) {
-    filterElement.disabled = true;
-  }
-};
-
-const turnFiltersOn = () => {
-  filters.classList.remove('ad-form--disabled');
-  for (const filterElement of filters.children) {
-    filterElement.disabled = false;
-  }
+const sliderConfig = {
+  MIN: 0,
+  MAX: 100000,
+  START: priceOfHousesElement.placeholder,
+  STEP: 1
 };
 
 const turnAddFormOff = () => {
-  addForm.classList.add('ad-form--disabled');
-  const addFormElements = addForm.querySelectorAll('fieldset');
+  addFormField.classList.add('ad-form--disabled');
+  const addFormElements = addFormField.querySelectorAll('fieldset');
   addFormElements.forEach((addFormElement) => {
     addFormElement.disabled = true;
   });
 };
 
 const turnAddFormOn = () => {
-  addForm.classList.remove('ad-form--disabled');
-  const addFormElements = addForm.querySelectorAll('fieldset');
+  addFormField.classList.remove('ad-form--disabled');
+  const addFormElements = addFormField.querySelectorAll('fieldset');
   addFormElements.forEach((addFormElement) => {
     addFormElement.disabled = false;
   });
 };
 
 const pristine = new Pristine(
-  addForm,
+  addFormField,
   {
     classTo: 'ad-form__element',
     errorClass: 'ad-form__element--invalid',
@@ -49,76 +43,109 @@ const pristine = new Pristine(
   true
 );
 
+noUiSlider.create(sliderElement, {
+  range: {
+    min: sliderConfig.MIN,
+    max: sliderConfig.MAX
+  },
+  start: sliderConfig.START,
+  step: sliderConfig.STEP,
+  connect: 'lower',
+  format: {
+    to: function (value) {
+      return value.toFixed(0);
+    },
+    from: function (value) {
+      return value;
+    }
+  }
+});
+
 const validateCopacity = () =>
-  roomsForGuests[roomsNumbers.value].includes(capacity.value);
+  roomsForGuests[roomsNumbersElement.value].includes(capacityElement.value);
 
 const validatorTypesHousing = () => {
-  if (housingCoast[typesHousing.value] <= +priceOfHouses.value) {
+  if (housingCoast[typesHousingElement.value] <= +priceOfHousesElement.value) {
     return true;
   } else {
     return false;
   }
 };
 
+const setAddress = (coordinate) => {
+  addressElement.value = `${coordinate.lat.toFixed(5)}, ${coordinate.lng.toFixed(5)}`;
+};
 
 const getCapacityErrorMessage = () =>
-  `Указанное количество комнат вмещает ${roomsForGuests[roomsNumbers.value].join(' или ')} гостей.`;
+  `Указанное количество комнат вмещает ${roomsForGuests[roomsNumbersElement.value].join(' или ')} гостей.`;
 
 
 const getRoomsErrorMessage = () =>
-  `Для указанного количества гостей требуется ${guestsForRooms[capacity.value].join(' или ')} комнат.`;
+  `Для указанного количества гостей требуется ${guestsForRooms[capacityElement.value].join(' или ')} комнат.`;
 
 const getCoastErrorMessage = () =>
-  `Для указанного типа жилья стоимость должна быть не меньше ${housingCoast[typesHousing.value]}`;
+  `Для указанного типа жилья стоимость должна быть не меньше ${housingCoast[typesHousingElement.value]}`;
 
 const onCapacityRoomsChange = () => {
-  pristine.validate(capacity);
-  pristine.validate(roomsNumbers);
+  pristine.validate(capacityElement);
+  pristine.validate(roomsNumbersElement);
 };
 
 const onTypeHousingChange = () => {
-  pristine.validate(priceOfHouses);
+  pristine.validate(priceOfHousesElement);
 };
 
+const onSliderChange = () => {
+  priceOfHousesElement.value = sliderElement.noUiSlider.get();
+};
+
+const onTypeHousingPlaceholderChange = () => {
+  priceOfHousesElement.placeholder = housingCoast[typesHousingElement.value];
+  onTypeHousingChange();
+};
+
+const onTimeInChange = () => {
+  timeOutElement.value = timeInElement.value;
+};
+
+const onTimeOutChange = () => {
+  timeInElement.value = timeOutElement.value;
+};
+
+const onAddFormSubmit = (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+
+  if (isValid) {
+    addFormField.submit();
+  }
+};
+
+
 pristine.addValidator (
-  capacity,
+  capacityElement,
   validateCopacity,
   getCapacityErrorMessage
 );
 
 pristine.addValidator (
-  roomsNumbers,
+  roomsNumbersElement,
   validateCopacity,
   getRoomsErrorMessage
 );
 
 pristine.addValidator (
-  priceOfHouses,
+  priceOfHousesElement,
   validatorTypesHousing,
   getCoastErrorMessage
 );
 
-// pristine.addValidator ();
+capacityElement.addEventListener('change', onCapacityRoomsChange);
+roomsNumbersElement.addEventListener('change', onCapacityRoomsChange);
+typesHousingElement.addEventListener('change', onTypeHousingPlaceholderChange);
+timeInElement.addEventListener('change', onTimeInChange);
+timeOutElement.addEventListener('change', onTimeOutChange);
+addFormField.addEventListener('submit', onAddFormSubmit);
+sliderElement.noUiSlider.on('update', onSliderChange);
 
-capacity.addEventListener('change', onCapacityRoomsChange);
-roomsNumbers.addEventListener('change', onCapacityRoomsChange);
-typesHousing.addEventListener('change', () => {
-  priceOfHouses.placeholder = housingCoast[typesHousing.value];
-  onTypeHousingChange();
-});
-timeIn.addEventListener('change', () => {
-  timeOut.value = timeIn.value;
-});
-timeOut.addEventListener('change', () => {
-  timeIn.value = timeOut.value;
-});
-addForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-
-  if (isValid) {
-    addForm.submit();
-  }
-});
-
-export {turnFiltersOff, turnFiltersOn, turnAddFormOff, turnAddFormOn};
+export {turnAddFormOff, turnAddFormOn, setAddress};
