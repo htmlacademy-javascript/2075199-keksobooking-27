@@ -9,6 +9,7 @@ const timeInElement = addFormField.querySelector('#timein');
 const timeOutElement = addFormField.querySelector('#timeout');
 const addressElement = addFormField.querySelector('#address');
 const sliderElement = addFormField.querySelector('#price-slider');
+const submitButton = addFormField.querySelector('.ad-form__submit');
 
 const sliderConfig = {
   MIN: 0,
@@ -31,6 +32,21 @@ const turnAddFormOn = () => {
   addFormElements.forEach((addFormElement) => {
     addFormElement.disabled = false;
   });
+};
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Отправляю...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+const resetForm = () => {
+  addFormField.reset();
+  sliderElement.noUiSlider.set(priceOfHousesElement.value);
 };
 
 const pristine = new Pristine(
@@ -112,16 +128,6 @@ const onTimeOutChange = () => {
   timeInElement.value = timeOutElement.value;
 };
 
-const onAddFormSubmit = (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-
-  if (isValid) {
-    addFormField.submit();
-  }
-};
-
-
 pristine.addValidator (
   capacityElement,
   validateCopacity,
@@ -140,12 +146,30 @@ pristine.addValidator (
   getCoastErrorMessage
 );
 
+const setOnFormSubmit = (cb) => {
+  addFormField.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate;
+
+    if (isValid) {
+      blockSubmitButton();
+      await cb(new FormData(evt.target));
+      unblockSubmitButton();
+    }
+  });
+};
+
 capacityElement.addEventListener('change', onCapacityRoomsChange);
 roomsNumbersElement.addEventListener('change', onCapacityRoomsChange);
 typesHousingElement.addEventListener('change', onTypeHousingPlaceholderChange);
 timeInElement.addEventListener('change', onTimeInChange);
 timeOutElement.addEventListener('change', onTimeOutChange);
-addFormField.addEventListener('submit', onAddFormSubmit);
 sliderElement.noUiSlider.on('update', onSliderChange);
 
-export {turnAddFormOff, turnAddFormOn, setAddress};
+export {
+  turnAddFormOff,
+  turnAddFormOn,
+  setAddress,
+  resetForm,
+  setOnFormSubmit
+};

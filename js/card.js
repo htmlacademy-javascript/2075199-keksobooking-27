@@ -7,7 +7,7 @@ const photoHeight = 40;
 const renderFeatures = (cardElement, features) => {
   const featuresList = cardElement.querySelector('.popup__features');
   const featuresItems = cardElement.querySelectorAll('.popup__feature');
-  if (featuresItems && featuresItems.length) {
+  if (features && features.length) {
     const modifiers = features.map((feature) => `popup__feature--${feature}`);
     featuresItems.forEach((featuresItem) => {
       const modifier = featuresItem.classList[1];
