@@ -63,11 +63,13 @@ const getFilteredOffers = (offers) => {
 
   const selectedFeatures = [];
   const filteredOffers = [];
+
   featuresCheckboxes.forEach((checkbox) => {
     if (checkbox.checked) {
       selectedFeatures.push(checkbox.value);
     }
   });
+
   for (const offer of offers) {
     if (filteredOffers.length >= OFFERS_COUNT) {
       break;
