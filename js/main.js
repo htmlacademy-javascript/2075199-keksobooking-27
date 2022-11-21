@@ -18,9 +18,9 @@ const resetCoorditate = () => {
 
 const onGetDataSuccess = (offers) => {
   turnFiltersOn();
-  setAdPins(getFilteredOffers(offers));
+  setAdPins(offers);
   setOnFilterChange(debounce(
-    () => setAdPins(getFilteredOffers(offers))
+    () => setAdPins(offers.filter(getFilteredOffers))
   ), RERENDER_DELAY);
 };
 
