@@ -91,6 +91,17 @@ const guestsForRooms = {
   3: ['3']
 };
 
+// Оптимизация
+
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
 export {
   getRangeIntegerNumber,
   getRangePointNumber,
@@ -99,5 +110,6 @@ export {
   roomsForGuests,
   guestsForRooms,
   housingCoast,
-  showAlert
+  showAlert,
+  debounce
 };
