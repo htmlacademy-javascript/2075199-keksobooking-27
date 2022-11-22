@@ -1,3 +1,39 @@
+const API_SEND = 'https://27.javascript.pages.academy/keksobooking';
+
+const API_GET = 'https://27.javascript.pages.academy/keksobooking/data';
+
+const CARD_PHOTO_WIDTH = 45;
+
+const CARD_PHOTO_HEIGHT = 40;
+
+const HOUSE_PRICE = {
+  MIDDLE: 10000,
+  HIGH: 50000,
+};
+
+const TYPES_HOUSES = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель'
+};
+
+const ROOMS_FOR_GUESTS = {
+  1: ['1'],
+  2: ['2', '1'],
+  3: ['3', '2', '1'],
+  100: ['0']
+};
+
+const guestsForRooms = {
+  0: ['100'],
+  1: ['1', '2', '3'],
+  2: ['2', '3'],
+  3: ['3']
+};
+
+
 // Целое случайное число в заданном диапазоне
 
 const getRangeIntegerNumber = (min, max) => {
@@ -92,6 +128,8 @@ const guestsForRooms = {
 };
 
 export {
+  API_SEND,
+  API_GET,
   getRangeIntegerNumber,
   getRangePointNumber,
   getRandomArrayElement,
