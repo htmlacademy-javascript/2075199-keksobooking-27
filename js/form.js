@@ -10,6 +10,11 @@ const timeOutElement = addFormField.querySelector('#timeout');
 const addressElement = addFormField.querySelector('#address');
 const sliderElement = addFormField.querySelector('#price-slider');
 const submitButton = addFormField.querySelector('.ad-form__submit');
+const resetButton = addFormField.querySelector('.ad-form__reset');
+const avatarField = addFormField.querySelector('#avatar');
+const previewAvatar = addFormField.querySelector('.ad-form-header__preview img');
+const photoField = addFormField.querySelector('#images');
+const containerPhotos = addFormField.querySelector('.ad-form__photo');
 
 const sliderConfig = {
   MIN: 0,
@@ -17,6 +22,32 @@ const sliderConfig = {
   START: priceOfHousesElement.placeholder,
   STEP: 1
 };
+
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
+const checkFileTypes = (fileName) => FILE_TYPES.some((it) => fileName.toLowerCase().endsWith(it));
+
+avatarField.addEventListener('change', () => {
+  const file = avatarField.files[0];
+  if (checkFileTypes(file.name)) {
+    previewAvatar.src = URL.createObjectURL(file);
+  }
+});
+
+photoField.addEventListener('change', () => {
+  const files = photoField.files;
+  const fragment = document.createDocumentFragment();
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    if (checkFileTypes(file.name)) {
+      const image = document.createElement('img');
+      image.src = URL.createObjectURL(file);
+      image.classList.add('ad-form__photo');
+      fragment.appendChild(image);
+    }
+  }
+  containerPhotos.appendChild(fragment);
+});
 
 const turnAddFormOff = () => {
   addFormField.classList.add('ad-form--disabled');
@@ -34,6 +65,10 @@ const turnAddFormOn = () => {
   });
 };
 
+const setResetButtonClick = (reset) => {
+  resetButton.addEventListener('click', reset);
+};
+
 const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = 'Отправляю...';
@@ -46,7 +81,9 @@ const unblockSubmitButton = () => {
 
 const resetForm = () => {
   addFormField.reset();
-  sliderElement.noUiSlider.set(priceOfHousesElement.value);
+  sliderElement.noUiSlider.set(priceOfHousesElement.placeholder);
+  previewAvatar.src = './img/muffin-grey.svg';
+  containerPhotos.innerHTML = '';
 };
 
 const pristine = new Pristine(
@@ -115,6 +152,10 @@ const onSliderChange = () => {
   priceOfHousesElement.value = sliderElement.noUiSlider.get();
 };
 
+const onPriceChange = () => {
+  sliderElement.noUiSlider.set(priceOfHousesElement.value);
+};
+
 const onTypeHousingPlaceholderChange = () => {
   priceOfHousesElement.placeholder = housingCoast[typesHousingElement.value];
   onTypeHousingChange();
@@ -165,11 +206,13 @@ typesHousingElement.addEventListener('change', onTypeHousingPlaceholderChange);
 timeInElement.addEventListener('change', onTimeInChange);
 timeOutElement.addEventListener('change', onTimeOutChange);
 sliderElement.noUiSlider.on('update', onSliderChange);
+priceOfHousesElement.addEventListener('change', onPriceChange);
 
 export {
   turnAddFormOff,
   turnAddFormOn,
   setAddress,
   resetForm,
-  setOnFormSubmit
+  setOnFormSubmit,
+  setResetButtonClick
 };
