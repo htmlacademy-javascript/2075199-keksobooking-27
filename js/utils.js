@@ -6,6 +6,12 @@ const CARD_PHOTO_WIDTH = 45;
 
 const CARD_PHOTO_HEIGHT = 40;
 
+const OFFERS_COUNT = 10;
+
+const ALERT_SHOW_TIME = 5000;
+
+const RERENDER_DELAY = 500;
+
 const HOUSE_PRICE = {
   MIDDLE: 10000,
   HIGH: 50000,
@@ -26,13 +32,29 @@ const ROOMS_FOR_GUESTS = {
   100: ['0']
 };
 
-const guestsForRooms = {
+const GUEST_FOR_ROOMS = {
   0: ['100'],
   1: ['1', '2', '3'],
   2: ['2', '3'],
   3: ['3']
 };
 
+const HOUSES_COST = {
+  flat: '1000',
+  bungalow: '0',
+  house: '5000',
+  palace: '10000',
+  hotel: '3000'
+};
+
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
+const AVATAT_CHANGES = ['./img/muffin-grey.svg', './img/muffin-red.svg', './img/muffin-white.svg'];
+
+const START_COORDINATE = {
+  lat: 35.66023,
+  lng: 139.73007,
+};
 
 // Целое случайное число в заданном диапазоне
 
@@ -72,8 +94,6 @@ const getRandomArrayElement = (array) =>
 
 // Вспрывающее окно об ощибке отправки
 
-const ALERT_SHOW_TIME = 5000;
-
 const showAlert = (message) => {
   const alert = document.createElement('div');
   alert.style.position = 'absolute';
@@ -95,41 +115,12 @@ const showAlert = (message) => {
 
 //
 
-const typesHousing = {
-  flat: 'Квартира',
-  bungalow: 'Бунгало',
-  house: 'Дом',
-  palace: 'Дворец',
-  hotel: 'Отель'
-};
-
-const housingCoast = {
-  flat: '1000',
-  bungalow: '0',
-  house: '5000',
-  palace: '10000',
-  hotel: '3000'
-};
-
 // Валидация количесива гостей и количества комнат
 
-const roomsForGuests = {
-  1: ['1'],
-  2: ['2', '1'],
-  3: ['3', '2', '1'],
-  100: ['0']
-};
-
-const guestsForRooms = {
-  0: ['100'],
-  1: ['1', '2', '3'],
-  2: ['2', '3'],
-  3: ['3']
-};
 
 // Оптимизация
 
-function debounce (callback, timeoutDelay = 500) {
+function debounce (callback, timeoutDelay = RERENDER_DELAY) {
   let timeoutId;
 
   return (...rest) => {
@@ -141,13 +132,21 @@ function debounce (callback, timeoutDelay = 500) {
 export {
   API_SEND,
   API_GET,
+  CARD_PHOTO_WIDTH,
+  CARD_PHOTO_HEIGHT,
+  OFFERS_COUNT,
+  HOUSE_PRICE,
+  TYPES_HOUSES,
+  ROOMS_FOR_GUESTS,
+  GUEST_FOR_ROOMS,
+  HOUSES_COST,
+  FILE_TYPES,
+  AVATAT_CHANGES,
+  RERENDER_DELAY,
+  START_COORDINATE,
   getRangeIntegerNumber,
   getRangePointNumber,
   getRandomArrayElement,
-  typesHousing,
-  roomsForGuests,
-  guestsForRooms,
-  housingCoast,
   showAlert,
   debounce
 };

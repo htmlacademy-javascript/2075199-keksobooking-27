@@ -2,15 +2,8 @@ import {turnAddFormOff, turnAddFormOn, setAddress, resetForm, setOnFormSubmit, s
 import {turnFiltersOff, turnFiltersOn, getFilteredOffers, setOnFilterChange, resetFilter} from './filter.js';
 import {initMap, setAdPins, setOnMainPinMove, setOnMapLoad, resetMainMarker} from './map.js';
 import {showSuccessMessage, showErrorMessage} from './message.js';
-import {showAlert, debounce} from './utils.js';
+import {RERENDER_DELAY, START_COORDINATE, showAlert, debounce} from './utils.js';
 import {getData, sendData} from './api.js';
-
-const START_COORDINATE = {
-  lat: 35.66023,
-  lng: 139.73007,
-};
-
-const RERENDER_DELAY = 500;
 
 const resetCoorditate = () => {
   setAddress(START_COORDINATE);
