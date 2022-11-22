@@ -1,6 +1,6 @@
+import {OFFERS_COUNT} from './utils.js';
 import {createCardOffer} from './card.js';
 
-const OFFERS_COUNT = 10;
 const map = L.map('map-canvas');
 const markerGroup = L.layerGroup().addTo(map);
 

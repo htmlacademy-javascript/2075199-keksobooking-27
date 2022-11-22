@@ -1,5 +1,7 @@
+import {API_SEND, API_GET} from './utils.js';
+
 const getData = (onSuccess) => {
-  fetch('https://27.javascript.pages.academy/keksobooking/data')
+  fetch(API_GET)
     .then((response) => response.json())
     .then((offers) => {
       onSuccess(offers);
@@ -7,7 +9,7 @@ const getData = (onSuccess) => {
 };
 
 const sendData = (onSuccess, onFail, body) => {
-  fetch('https://27.javascript.pages.academy/keksobooking',
+  fetch(API_SEND,
     {
       method: 'POST',
       body,

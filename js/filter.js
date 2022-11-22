@@ -1,7 +1,4 @@
-const Price = {
-  MIDDLE: 10000,
-  HIGH: 50000,
-};
+import {HOUSE_PRICE} from './utils.js';
 
 const setAnyValue = (id) => {
   const field = document.querySelector(`#${id}`);
@@ -52,11 +49,11 @@ const filterByPrice = (offer) => {
     case 'any':
       return true;
     case 'low':
-      return offer.offer.price < Price.MIDDLE;
+      return offer.offer.price < HOUSE_PRICE.MIDDLE;
     case 'middle':
-      return offer.offer.price < Price.HIGH && offer.offer.price > Price.MIDDLE;
+      return offer.offer.price < HOUSE_PRICE.HIGH && offer.offer.price > HOUSE_PRICE.MIDDLE;
     case 'high':
-      return offer.offer.price >= Price.MIDDLE;
+      return offer.offer.price >= HOUSE_PRICE.MIDDLE;
   }
 };
 
