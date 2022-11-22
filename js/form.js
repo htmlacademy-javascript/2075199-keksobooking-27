@@ -65,6 +65,10 @@ const turnAddFormOn = () => {
   });
 };
 
+const setResetButtonClick = (reset) => {
+  resetButton.addEventListener('click', reset);
+};
+
 const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = 'Отправляю...';
@@ -77,7 +81,9 @@ const unblockSubmitButton = () => {
 
 const resetForm = () => {
   addFormField.reset();
-  sliderElement.noUiSlider.set(priceOfHousesElement.value);
+  sliderElement.noUiSlider.set(priceOfHousesElement.placeholder);
+  previewAvatar.src = './img/muffin-grey.svg';
+  containerPhotos.innerHTML = '';
 };
 
 const pristine = new Pristine(
@@ -146,6 +152,10 @@ const onSliderChange = () => {
   priceOfHousesElement.value = sliderElement.noUiSlider.get();
 };
 
+const onPriceChange = () => {
+  sliderElement.noUiSlider.set(priceOfHousesElement.value);
+};
+
 const onTypeHousingPlaceholderChange = () => {
   priceOfHousesElement.placeholder = housingCoast[typesHousingElement.value];
   onTypeHousingChange();
@@ -196,11 +206,13 @@ typesHousingElement.addEventListener('change', onTypeHousingPlaceholderChange);
 timeInElement.addEventListener('change', onTimeInChange);
 timeOutElement.addEventListener('change', onTimeOutChange);
 sliderElement.noUiSlider.on('update', onSliderChange);
+priceOfHousesElement.addEventListener('change', onPriceChange);
 
 export {
   turnAddFormOff,
   turnAddFormOn,
   setAddress,
   resetForm,
-  setOnFormSubmit
+  setOnFormSubmit,
+  setResetButtonClick
 };

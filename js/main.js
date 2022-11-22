@@ -1,6 +1,6 @@
-import {turnAddFormOff, turnAddFormOn, setAddress, resetForm, setOnFormSubmit} from './form.js';
-import {turnFiltersOff, turnFiltersOn, getFilteredOffers, setOnFilterChange} from './filter.js';
-import {initMap, setAdPins, setOnMainPinMove, setOnMapLoad} from './map.js';
+import {turnAddFormOff, turnAddFormOn, setAddress, resetForm, setOnFormSubmit, setResetButtonClick} from './form.js';
+import {turnFiltersOff, turnFiltersOn, getFilteredOffers, setOnFilterChange, resetFilter} from './filter.js';
+import {initMap, setAdPins, setOnMainPinMove, setOnMapLoad, resetMainMarker} from './map.js';
 import {showSuccessMessage, showErrorMessage} from './message.js';
 import {showAlert, debounce} from './utils.js';
 import {getData, sendData} from './api.js';
@@ -15,6 +15,14 @@ const RERENDER_DELAY = 500;
 const resetCoorditate = () => {
   setAddress(START_COORDINATE);
 };
+
+const reset = () => {
+  resetForm();
+  resetFilter();
+  resetMainMarker(START_COORDINATE);
+};
+
+setResetButtonClick(reset);
 
 const onGetDataSuccess = (offers) => {
   turnFiltersOn();

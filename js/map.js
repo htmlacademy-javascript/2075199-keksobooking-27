@@ -70,4 +70,6 @@ const setOnMapLoad = (cb) => {
   map.on('load', cb);
 };
 
-export {initMap, setAdPins, setOnMainPinMove, setOnMapLoad};
+const resetMainMarker = (coordinate) => mainPinMarker.setLatLng(coordinate);
+
+export {initMap, setAdPins, setOnMainPinMove, setOnMapLoad, resetMainMarker};
