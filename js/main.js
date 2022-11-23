@@ -25,11 +25,11 @@ const onGetDataSuccess = (offers) => {
   ), RERENDER_DELAY);
 };
 
-const onSendDataSuccess = ( ) => {
-  resetForm();
-  resetCoorditate();
-  showSuccessMessage();
-};
+// const onSendDataSuccess = ( ) => {
+//   resetForm();
+//   resetCoorditate();
+//   showSuccessMessage();
+// };
 
 setOnMapLoad(() => {
   setOnMainPinMove(setAddress);
@@ -37,8 +37,11 @@ setOnMapLoad(() => {
   resetCoorditate();
 });
 
-setOnFormSubmit(async (data) => {
-  await sendData(onSendDataSuccess, showErrorMessage, data);
+setOnFormSubmit(() => {
+  reset();
+  showSuccessMessage();
+}, () => {
+  showErrorMessage();
 });
 
 turnFiltersOff();

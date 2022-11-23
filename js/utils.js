@@ -72,21 +72,6 @@ const getRangeIntegerNumber = (min, max) => {
   return randomNumber;
 };
 
-// Случайное число с плавающей точкой в заданном диапазоне
-
-const getRangePointNumber = (min, max, digitalAfterPoint = 1) => {
-  if (min < 0 || max < 0 || min === max || digitalAfterPoint < 0) {
-    return NaN;
-  } if (min > max) {
-    const swap = min;
-    min = max;
-    max = swap;
-  }
-  const randomNumber = Math.random() * (max - min) + min;
-
-  return +randomNumber.toFixed(digitalAfterPoint);
-};
-
 // Получение случайного элемента массива
 
 const getRandomArrayElement = (array) =>
@@ -145,7 +130,6 @@ export {
   RERENDER_DELAY,
   START_COORDINATE,
   getRangeIntegerNumber,
-  getRangePointNumber,
   getRandomArrayElement,
   showAlert,
   debounce
