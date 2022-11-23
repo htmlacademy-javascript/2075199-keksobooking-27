@@ -1,4 +1,4 @@
-import {ROOMS_FOR_GUESTS, GUEST_FOR_ROOMS, HOUSES_COST, FILE_TYPES, AVATAT_CHANGES, getRandomArrayElement} from './utils.js';
+import {ROOMS_FOR_GUESTS, GUEST_FOR_ROOMS, HOUSES_COST, FILE_TYPES, AVATAT_CHANGES, getRandomArrayElement, START_COORDINATE} from './utils.js';
 
 const addFormField = document.querySelector('.ad-form');
 const roomsNumbersElement = addFormField.querySelector('#room_number');
@@ -177,7 +177,7 @@ pristine.addValidator (
 const setOnFormSubmit = (cb) => {
   addFormField.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-    const isValid = pristine.validate;
+    const isValid = pristine.validate();
 
     if (isValid) {
       blockSubmitButton();
@@ -193,6 +193,7 @@ const setResetButtonClick = (reset) => {
 
 const resetForm = () => {
   addFormField.reset();
+  setAddress(START_COORDINATE);
   sliderElement.noUiSlider.set(priceOfHousesElement.placeholder);
   previewAvatar.src = getRandomArrayElement(AVATAT_CHANGES);
   containerPhotos.innerHTML = '';

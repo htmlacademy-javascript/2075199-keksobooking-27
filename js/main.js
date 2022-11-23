@@ -37,8 +37,15 @@ setOnMapLoad(() => {
   resetCoorditate();
 });
 
-setOnFormSubmit(async (data) => {
-  await sendData(onSendDataSuccess, showErrorMessage, data);
+// setOnFormSubmit(() => {
+//   reset();
+//   showSuccessMessage();
+// }, () => {
+//   showErrorMessage();
+// });
+
+setOnFormSubmit((data) => {
+  sendData(onSendDataSuccess, showErrorMessage, data);
 });
 
 turnFiltersOff();
