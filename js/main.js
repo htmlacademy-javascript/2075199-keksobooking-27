@@ -25,11 +25,11 @@ const onGetDataSuccess = (offers) => {
   ), RERENDER_DELAY);
 };
 
-// const onSendDataSuccess = ( ) => {
-//   resetForm();
-//   resetCoorditate();
-//   showSuccessMessage();
-// };
+const onSendDataSuccess = ( ) => {
+  resetForm();
+  resetCoorditate();
+  showSuccessMessage();
+};
 
 setOnMapLoad(() => {
   setOnMainPinMove(setAddress);
@@ -37,11 +37,15 @@ setOnMapLoad(() => {
   resetCoorditate();
 });
 
-setOnFormSubmit(() => {
-  reset();
-  showSuccessMessage();
-}, () => {
-  showErrorMessage();
+// setOnFormSubmit(() => {
+//   reset();
+//   showSuccessMessage();
+// }, () => {
+//   showErrorMessage();
+// });
+
+setOnFormSubmit((data) => {
+  sendData(onSendDataSuccess, showErrorMessage, data);
 });
 
 turnFiltersOff();
