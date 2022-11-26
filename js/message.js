@@ -10,7 +10,7 @@ const onErrorButtonClick = () => {
   hideMessage();
 };
 
-const onOverlayClick = () => {
+const onViewportClick = () => {
   hideMessage();
 };
 
@@ -24,7 +24,7 @@ const onEscKeydown = (evt) => {
 const showSuccessMessage = () => {
   const successMessageElement = successMessageTemplate.cloneNode(true);
   document.addEventListener('keydown', onEscKeydown);
-  document.addEventListener('click', onOverlayClick);
+  document.addEventListener('click', onViewportClick);
   bodyElement.append(successMessageElement);
   bodyElement.style.overflow = 'hidden';
 };
@@ -42,7 +42,7 @@ function hideMessage () {
     document.querySelector('.success') || document.querySelector('.error');
   messageElement.remove();
   document.removeEventListener('keydown', onEscKeydown);
-  document.removeEventListener('click', onOverlayClick);
+  document.removeEventListener('click', onViewportClick);
   bodyElement.style.overflow = 'auto';
 }
 
