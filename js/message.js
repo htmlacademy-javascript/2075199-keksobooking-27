@@ -14,7 +14,7 @@ const onOverlayClick = () => {
   hideMessage();
 };
 
-const onMessageEscKeydown = (evt) => {
+const onEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     hideMessage();
@@ -23,7 +23,7 @@ const onMessageEscKeydown = (evt) => {
 
 const showSuccessMessage = () => {
   const successMessageElement = successMessageTemplate.cloneNode(true);
-  document.addEventListener('keydown', onMessageEscKeydown);
+  document.addEventListener('keydown', onEscKeydown);
   document.addEventListener('click', onOverlayClick);
   bodyElement.append(successMessageElement);
   bodyElement.style.overflow = 'hidden';
@@ -31,7 +31,7 @@ const showSuccessMessage = () => {
 
 const showErrorMessage = () => {
   const errorMessageElement = errorMessageTemplate.cloneNode(true);
-  document.addEventListener('keydown', onMessageEscKeydown);
+  document.addEventListener('keydown', onEscKeydown);
   errorMessageElement.querySelector('.error__button').addEventListener('click', onErrorButtonClick);
   bodyElement.append(errorMessageElement);
   bodyElement.style.overflow = 'hidden';
@@ -41,7 +41,7 @@ function hideMessage () {
   const messageElement =
     document.querySelector('.success') || document.querySelector('.error');
   messageElement.remove();
-  document.removeEventListener('keydown', onMessageEscKeydown);
+  document.removeEventListener('keydown', onEscKeydown);
   document.removeEventListener('click', onOverlayClick);
   bodyElement.style.overflow = 'auto';
 }

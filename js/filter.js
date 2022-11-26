@@ -1,20 +1,4 @@
-import {HOUSE_PRICE} from './utils.js';
-
-const setAnyValue = (id) => {
-  const field = document.querySelector(`#${id}`);
-  field.value = 'any';
-};
-
-const resetFilter = () => {
-  setAnyValue('housing-type');
-  setAnyValue('housing-price');
-  setAnyValue('housing-rooms');
-  setAnyValue('housing-guests');
-  const features = document.querySelectorAll('.map__features input');
-  features.forEach((element) => {
-    element.checked = false;
-  });
-};
+import {housePrices} from './utils.js';
 
 const filtersField = document.querySelector('.map__filters');
 const housingTypeElement = filtersField.querySelector('#housing-type');
@@ -23,18 +7,24 @@ const housingRoomsElement = filtersField.querySelector('#housing-rooms');
 const housingGuestsElement = filtersField.querySelector('#housing-guests');
 const featuresCheckboxes = filtersField.querySelectorAll('.map__checkbox');
 
+const resetFilter = () => {
+  filtersField.reset();
+};
+
 const turnFiltersOff = () => {
   filtersField.classList.add('ad-form--disabled');
-  for (const filterElement of filtersField.children) {
+  const filterElements = filtersField.querySelectorAll('.map__filter');
+  filterElements.forEach((filterElement) => {
     filterElement.disabled = true;
-  }
+  });
 };
 
 const turnFiltersOn = () => {
   filtersField.classList.remove('ad-form--disabled');
-  for (const filterElement of filtersField.children) {
+  const filterElements = filtersField.querySelectorAll('.map__filter');
+  filterElements.forEach((filterElement) => {
     filterElement.disabled = false;
-  }
+  });
 };
 
 const filterByType = (offer) => {
@@ -49,11 +39,11 @@ const filterByPrice = (offer) => {
     case 'any':
       return true;
     case 'low':
-      return offer.offer.price < HOUSE_PRICE.MIDDLE;
+      return offer.offer.price < housePrices.MIDDLE;
     case 'middle':
-      return offer.offer.price < HOUSE_PRICE.HIGH && offer.offer.price > HOUSE_PRICE.MIDDLE;
+      return offer.offer.price < housePrices.HIGH && offer.offer.price > housePrices.MIDDLE;
     case 'high':
-      return offer.offer.price >= HOUSE_PRICE.MIDDLE;
+      return offer.offer.price >= housePrices.MIDDLE;
   }
 };
 
@@ -86,28 +76,17 @@ const filterByFeatures = (offer) => {
 };
 
 const getFilteredOffers = (offer) =>
-  filterByType(offer) &&
-  filterByPrice(offer) &&
-  filterByRooms(offer) &&
-  filterByGuests(offer) &&
-  filterByFeatures(offer);
+  offer.filter((value) =>
+    filterByType(value) &&
+    filterByPrice(value) &&
+    filterByRooms(value) &&
+    filterByGuests(value) &&
+    filterByFeatures(value));
 
 const setOnFilterChange = (cb) => {
-  housingTypeElement.addEventListener('change', () => {
+  filtersField.addEventListener('change', () => {
     cb();
   });
-  housingPriceElement.addEventListener('change', () => {
-    cb();
-  });
-  housingRoomsElement.addEventListener('change', () => {
-    cb();
-  });
-  housingGuestsElement.addEventListener('change', () => {
-    cb();
-  });
-  featuresCheckboxes.forEach((feature) => feature.addEventListener('click', () => {
-    cb();
-  }));
 };
 
 export {turnFiltersOff, turnFiltersOn, getFilteredOffers, setOnFilterChange, resetFilter};

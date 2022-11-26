@@ -1,4 +1,4 @@
-import {ROOMS_FOR_GUESTS, GUEST_FOR_ROOMS, HOUSES_COST, FILE_TYPES, AVATAT_CHANGES, getRandomArrayElement, START_COORDINATE} from './utils.js';
+import {roomsForGuests, guestForRooms, housesCost, fileTypes, avatarsForChange, getRandomArrayElement} from './utils.js';
 
 const addFormField = document.querySelector('.ad-form');
 const roomsNumbersElement = addFormField.querySelector('#room_number');
@@ -16,14 +16,16 @@ const previewAvatar = addFormField.querySelector('.ad-form-header__preview img')
 const photoField = addFormField.querySelector('#images');
 const containerPhotos = addFormField.querySelector('.ad-form__photo');
 
-const sliderConfig = {
+addressElement.disabled = true;
+
+const SliderConfig = {
   MIN: 0,
   MAX: 100000,
   START: priceOfHousesElement.placeholder,
   STEP: 1
 };
 
-const checkFileTypes = (fileName) => FILE_TYPES.some((it) => fileName.toLowerCase().endsWith(it));
+const checkFileTypes = (fileName) => fileTypes.some((it) => fileName.toLowerCase().endsWith(it));
 
 avatarField.addEventListener('change', () => {
   const file = avatarField.files[0];
@@ -33,16 +35,13 @@ avatarField.addEventListener('change', () => {
 });
 
 photoField.addEventListener('change', () => {
-  const files = photoField.files;
+  const file = photoField.files[0];
   const fragment = document.createDocumentFragment();
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    if (checkFileTypes(file.name)) {
-      const image = document.createElement('img');
-      image.src = URL.createObjectURL(file);
-      image.classList.add('ad-form__photo');
-      fragment.appendChild(image);
-    }
+  if (checkFileTypes(file.name)) {
+    const image = document.createElement('img');
+    image.src = URL.createObjectURL(file);
+    image.classList.add('ad-form__photo');
+    fragment.appendChild(image);
   }
   containerPhotos.appendChild(fragment);
 });
@@ -85,11 +84,11 @@ const pristine = new Pristine(
 
 noUiSlider.create(sliderElement, {
   range: {
-    min: sliderConfig.MIN,
-    max: sliderConfig.MAX
+    min: SliderConfig.MIN,
+    max: SliderConfig.MAX
   },
-  start: sliderConfig.START,
-  step: sliderConfig.STEP,
+  start: SliderConfig.START,
+  step: SliderConfig.STEP,
   connect: 'lower',
   format: {
     to: function (value) {
@@ -102,13 +101,11 @@ noUiSlider.create(sliderElement, {
 });
 
 const validateCopacity = () =>
-  ROOMS_FOR_GUESTS[roomsNumbersElement.value].includes(capacityElement.value);
+  roomsForGuests[roomsNumbersElement.value].includes(capacityElement.value);
 
-const validatorTypesHousing = () => {
-  if (HOUSES_COST[typesHousingElement.value] <= +priceOfHousesElement.value) {
+const validateTypesHousing = () => {
+  if (housesCost[typesHousingElement.value] <= +priceOfHousesElement.value) {
     return true;
-  } else {
-    return false;
   }
 };
 
@@ -117,14 +114,14 @@ const setAddress = (coordinate) => {
 };
 
 const getCapacityErrorMessage = () =>
-  `Указанное количество комнат вмещает ${ROOMS_FOR_GUESTS[roomsNumbersElement.value].join(' или ')} гостей.`;
+  `Указанное количество комнат вмещает ${roomsForGuests[roomsNumbersElement.value].join(' или ')} гостей.`;
 
 
 const getRoomsErrorMessage = () =>
-  `Для указанного количества гостей требуется ${GUEST_FOR_ROOMS[capacityElement.value].join(' или ')} комнат.`;
+  `Для указанного количества гостей требуется ${guestForRooms[capacityElement.value].join(' или ')} комнат.`;
 
 const getCoastErrorMessage = () =>
-  `Для указанного типа жилья стоимость должна быть не меньше ${HOUSES_COST[typesHousingElement.value]}`;
+  `Для указанного типа жилья стоимость должна быть не меньше ${housesCost[typesHousingElement.value]}`;
 
 const onCapacityRoomsChange = () => {
   pristine.validate(capacityElement);
@@ -144,7 +141,7 @@ const onPriceChange = () => {
 };
 
 const onTypeHousingPlaceholderChange = () => {
-  priceOfHousesElement.placeholder = HOUSES_COST[typesHousingElement.value];
+  priceOfHousesElement.placeholder = housesCost[typesHousingElement.value];
   onTypeHousingChange();
 };
 
@@ -170,7 +167,7 @@ pristine.addValidator (
 
 pristine.addValidator (
   priceOfHousesElement,
-  validatorTypesHousing,
+  validateTypesHousing,
   getCoastErrorMessage
 );
 
@@ -188,14 +185,16 @@ const setOnFormSubmit = (cb) => {
 };
 
 const setResetButtonClick = (reset) => {
-  resetButton.addEventListener('click', reset);
+  resetButton.addEventListener('click',(evt) => {
+    evt.preventDefault();
+    reset();
+  });
 };
 
 const resetForm = () => {
   addFormField.reset();
-  setAddress(START_COORDINATE);
   sliderElement.noUiSlider.set(priceOfHousesElement.placeholder);
-  previewAvatar.src = getRandomArrayElement(AVATAT_CHANGES);
+  previewAvatar.src = getRandomArrayElement(avatarsForChange);
   containerPhotos.innerHTML = '';
 };
 

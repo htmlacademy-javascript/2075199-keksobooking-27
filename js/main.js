@@ -2,28 +2,30 @@ import {turnAddFormOff, turnAddFormOn, setAddress, resetForm, setOnFormSubmit, s
 import {turnFiltersOff, turnFiltersOn, getFilteredOffers, setOnFilterChange, resetFilter} from './filter.js';
 import {initMap, setAdPins, setOnMainPinMove, setOnMapLoad, resetMainMarker} from './map.js';
 import {showSuccessMessage, showErrorMessage} from './message.js';
-import {RERENDER_DELAY, START_COORDINATE, showAlert, debounce} from './utils.js';
+import {RERENDER_DELAY, startCoordinate, showAlert, debounce} from './utils.js';
 import {getData, sendData} from './api.js';
 
 const resetCoorditate = () => {
-  setAddress(START_COORDINATE);
+  setAddress(startCoordinate);
 };
-
-const reset = () => {
-  resetForm();
-  resetFilter();
-  resetMainMarker(START_COORDINATE);
-};
-
-setResetButtonClick(reset);
 
 const onGetDataSuccess = (offers) => {
   turnFiltersOn();
   setAdPins(offers);
   setOnFilterChange(debounce(
-    () => setAdPins(offers.filter(getFilteredOffers))
+    () => setAdPins(getFilteredOffers(offers))
   ), RERENDER_DELAY);
 };
+
+const reset = () => {
+  resetCoorditate();
+  resetForm();
+  resetFilter();
+  resetMainMarker(startCoordinate);
+  getData(onGetDataSuccess, showAlert);
+};
+
+setResetButtonClick(reset);
 
 const onSendDataSuccess = ( ) => {
   resetForm();
@@ -44,6 +46,6 @@ setOnFormSubmit((data) => {
 
 turnFiltersOff();
 turnAddFormOff();
-initMap(START_COORDINATE);
+initMap(startCoordinate);
 
 getData(onGetDataSuccess, showAlert);

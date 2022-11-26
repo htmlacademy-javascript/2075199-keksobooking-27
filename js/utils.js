@@ -12,12 +12,12 @@ const ALERT_SHOW_TIME = 5000;
 
 const RERENDER_DELAY = 500;
 
-const HOUSE_PRICE = {
+const housePrices = {
   MIDDLE: 10000,
   HIGH: 50000,
 };
 
-const TYPES_HOUSES = {
+const typesHouses = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
   house: 'Дом',
@@ -25,21 +25,21 @@ const TYPES_HOUSES = {
   hotel: 'Отель'
 };
 
-const ROOMS_FOR_GUESTS = {
+const roomsForGuests = {
   1: ['1'],
   2: ['2', '1'],
   3: ['3', '2', '1'],
   100: ['0']
 };
 
-const GUEST_FOR_ROOMS = {
+const guestForRooms = {
   0: ['100'],
   1: ['1', '2', '3'],
   2: ['2', '3'],
   3: ['3']
 };
 
-const HOUSES_COST = {
+const housesCost = {
   flat: '1000',
   bungalow: '0',
   house: '5000',
@@ -47,11 +47,11 @@ const HOUSES_COST = {
   hotel: '3000'
 };
 
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const fileTypes = ['jpg', 'jpeg', 'png'];
 
-const AVATAT_CHANGES = ['./img/muffin-grey.svg', './img/muffin-red.svg', './img/muffin-white.svg'];
+const avatarsForChange = ['./img/muffin-grey.svg', './img/muffin-red.svg', './img/muffin-white.svg'];
 
-const START_COORDINATE = {
+const startCoordinate = {
   lat: 35.66023,
   lng: 139.73007,
 };
@@ -120,15 +120,15 @@ export {
   CARD_PHOTO_WIDTH,
   CARD_PHOTO_HEIGHT,
   OFFERS_COUNT,
-  HOUSE_PRICE,
-  TYPES_HOUSES,
-  ROOMS_FOR_GUESTS,
-  GUEST_FOR_ROOMS,
-  HOUSES_COST,
-  FILE_TYPES,
-  AVATAT_CHANGES,
+  housePrices,
+  typesHouses,
+  roomsForGuests,
+  guestForRooms,
+  housesCost,
+  fileTypes,
+  avatarsForChange,
   RERENDER_DELAY,
-  START_COORDINATE,
+  startCoordinate,
   getRangeIntegerNumber,
   getRandomArrayElement,
   showAlert,

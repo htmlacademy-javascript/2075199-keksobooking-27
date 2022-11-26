@@ -1,4 +1,4 @@
-import {CARD_PHOTO_WIDTH, CARD_PHOTO_HEIGHT, TYPES_HOUSES} from './utils.js';
+import {CARD_PHOTO_WIDTH, CARD_PHOTO_HEIGHT, typesHouses} from './utils.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
@@ -73,7 +73,7 @@ const createCardOffer = ({author, offer}) => {
     cardElement.querySelector('.price').remove();
   }
   if (offer.type) {
-    cardElement.querySelector('.popup__type').textContent = TYPES_HOUSES[offer.type];
+    cardElement.querySelector('.popup__type').textContent = typesHouses[offer.type];
   } else {
     cardElement.querySelector('.popup__type').remove();
   }
