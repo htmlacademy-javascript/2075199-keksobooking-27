@@ -16,8 +16,6 @@ const previewAvatar = addFormField.querySelector('.ad-form-header__preview img')
 const photoField = addFormField.querySelector('#images');
 const containerPhotos = addFormField.querySelector('.ad-form__photo');
 
-addressElement.disabled = true;
-
 const SliderConfig = {
   MIN: 0,
   MAX: 100000,

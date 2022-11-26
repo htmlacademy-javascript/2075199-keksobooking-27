@@ -41,7 +41,7 @@ setOnMapLoad(() => {
 
 setOnFormSubmit((data) => {
   sendData(onSendDataSuccess, showErrorMessage, data);
-  reset();
+  // reset();
 });
 
 turnFiltersOff();
