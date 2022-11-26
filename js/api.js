@@ -1,10 +1,18 @@
 import {API_SEND, API_GET} from './utils.js';
 
-const getData = (onSuccess) => {
+const getData = (onSuccess, onFail) => {
   fetch(API_GET)
-    .then((response) => response.json())
-    .then((offers) => {
-      onSuccess(offers);
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(`${response.status} ${response.statusText}`);
+    })
+    .then((response) => {
+      onSuccess(response);
+    })
+    .catch((error) => {
+      onFail(`Ошибка загрузки данных ${error}`);
     });
 };
 
