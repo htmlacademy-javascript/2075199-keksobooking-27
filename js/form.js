@@ -101,11 +101,8 @@ noUiSlider.create(sliderElement, {
 const validateCopacity = () =>
   roomsForGuests[roomsNumbersElement.value].includes(capacityElement.value);
 
-const validateTypesHousing = () => {
-  if (housesCost[typesHousingElement.value] <= +priceOfHousesElement.value) {
-    return true;
-  }
-};
+const validateTypesHousing = () =>
+  housesCost[typesHousingElement.value] <= +priceOfHousesElement.value;
 
 const setAddress = (coordinate) => {
   addressElement.value = `${coordinate.lat.toFixed(5)}, ${coordinate.lng.toFixed(5)}`;

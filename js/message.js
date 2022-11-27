@@ -10,11 +10,11 @@ const onErrorButtonClick = () => {
   hideMessage();
 };
 
-const onViewportClick = () => {
+const onDocumentClick = () => {
   hideMessage();
 };
 
-const onEscKeydown = (evt) => {
+const onDocumentKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     hideMessage();
@@ -23,15 +23,15 @@ const onEscKeydown = (evt) => {
 
 const showSuccessMessage = () => {
   const successMessageElement = successMessageTemplate.cloneNode(true);
-  document.addEventListener('keydown', onEscKeydown);
-  document.addEventListener('click', onViewportClick);
+  document.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('click', onDocumentClick);
   bodyElement.append(successMessageElement);
   bodyElement.style.overflow = 'hidden';
 };
 
 const showErrorMessage = () => {
   const errorMessageElement = errorMessageTemplate.cloneNode(true);
-  document.addEventListener('keydown', onEscKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
   errorMessageElement.querySelector('.error__button').addEventListener('click', onErrorButtonClick);
   bodyElement.append(errorMessageElement);
   bodyElement.style.overflow = 'hidden';
@@ -41,8 +41,8 @@ function hideMessage () {
   const messageElement =
     document.querySelector('.success') || document.querySelector('.error');
   messageElement.remove();
-  document.removeEventListener('keydown', onEscKeydown);
-  document.removeEventListener('click', onViewportClick);
+  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('click', onDocumentClick);
   bodyElement.style.overflow = 'auto';
 }
 

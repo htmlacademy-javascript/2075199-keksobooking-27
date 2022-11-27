@@ -1,5 +1,5 @@
 import {turnAddFormOff, turnAddFormOn, setAddress, resetForm, setOnFormSubmit, setResetButtonClick} from './form.js';
-import {turnFiltersOff, turnFiltersOn, getFilteredOffers, setOnFilterChange, resetFilter} from './filter.js';
+import {turnFiltersOff, turnFiltersOn, setOnFilterChange, resetFilter, getFilteredOffers} from './filter.js';
 import {initMap, setAdPins, setOnMainPinMove, setOnMapLoad, resetMainMarker} from './map.js';
 import {showSuccessMessage, showErrorMessage} from './message.js';
 import {RERENDER_DELAY, startCoordinate, showAlert, debounce} from './utils.js';
