@@ -1,4 +1,4 @@
-import {housePrices} from './utils.js';
+import {housePrices, OFFERS_COUNT} from './utils.js';
 
 const filtersField = document.querySelector('.map__filters');
 const housingTypeElement = filtersField.querySelector('#housing-type');
@@ -75,13 +75,23 @@ const filterByFeatures = (offer) => {
   return featuresChecked.every((feature) => offer.offer.features.includes(feature));
 };
 
-const getFilteredOffers = (offer) =>
-  offer.filter((value) =>
-    filterByType(value) &&
-    filterByPrice(value) &&
-    filterByRooms(value) &&
-    filterByGuests(value) &&
-    filterByFeatures(value));
+const getFilteredOffers = (offers) => {
+  const filteredOffers = [];
+  offers.some((offer) => {
+    if (filteredOffers.length >= OFFERS_COUNT) {
+      return filteredOffers;
+    }
+    if (filterByType(offer) &&
+    filterByPrice(offer) &&
+    filterByRooms(offer) &&
+    filterByGuests(offer) &&
+    filterByFeatures(offer)) {
+      filteredOffers.push(offer);
+    }
+  });
+  return filteredOffers;
+};
+
 
 const setOnFilterChange = (cb) => {
   filtersField.addEventListener('change', () => {
